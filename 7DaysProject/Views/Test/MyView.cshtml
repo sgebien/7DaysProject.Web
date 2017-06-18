@@ -1,8 +1,9 @@
-﻿
-
+﻿@using _7DaysProject.ViewModels
+@model _7DaysProject.ViewModels.EmployeeViewModel
 
 @{
     Layout = null;
+
 }
 
 <!DOCTYPE html>
@@ -13,34 +14,12 @@
     <title>MyView</title>
 </head>
 <body>
-    <div> 
-        @Model _7DaysProject.Models.Employee
-       @{ 
-           _7DaysProject.Models.Employee emp = (_7DaysProject.Models.Employee)
-               ViewData["Employee"];
-       }
-        <b>Employee Details</b><br />
-        [__b__]Employee Details
-
-        Employee Name : @Model.FirstName @Model.LastName
-
-        @if (Model.Salary > 15000)
-        {
-            <span style="background-color:yellow">
-                Employee Salary: @Model.Salary.ToString("C")
-            </span>
-        }
-        else
-        {
-            <span style="background-color:green">
-
-                Employee Salary: @Model.Salary.ToString("C")
-            </span>
-        }
-
-        @*Not strongly typed*@
-        @*Employee Name: @emp.Firstname @emp.Lastname <br />
-        Employee Salary: @emp.Salary.ToString("C")*@
+    <div>
+        <b> Employee Details</b><br />
+        Employee Name: @Model.EmployeeName <br />
+        <span style="background-color: @Model.SalaryColor">
+            Employee Salary: @Model.Salary
+        </span>
     </div>
 </body>
 </html>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Razor.Parser.SyntaxTree;
 using _7DaysProject.Models;
+using _7DaysProject.ViewModels;
 
 namespace _7DaysProject.Controllers
 {
@@ -35,24 +36,27 @@ namespace _7DaysProject.Controllers
 
         public ActionResult GetView()
         {
-            Some_Condition_is_Matching = true;
-
             Employee emp = new Employee();
             emp.Firstname = "Sukesh";
             emp.Lastname = "Marla";
-            emp.Salary = 20000;
+            emp.Salary = 15001;
 
-            ViewData["Employee"] = emp;
+            EmployeeViewModel vmEmp = new EmployeeViewModel();
+            vmEmp.EmployeeName = $"{emp.Firstname} {emp.Lastname}";
+            vmEmp.Salary = emp.Salary.ToString("C");
 
-
-            if (Some_Condition_is_Matching)
+            if (emp.Salary > 15000)
             {
-                return View("myView");
+                vmEmp.SalaryColor = "yellow";
             }
             else
             {
-                return View("YourView");
+                vmEmp.SalaryColor = "green";
             }
+
+            vmEmp.Username = "Admin";
+
+            return View("MyView", vmEmp);
         }
 
 
