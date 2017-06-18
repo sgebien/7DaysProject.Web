@@ -36,27 +36,33 @@ namespace _7DaysProject.Controllers
 
         public ActionResult GetView()
         {
-            Employee emp = new Employee();
-            emp.Firstname = "Sukesh";
-            emp.Lastname = "Marla";
-            emp.Salary = 15001;
+            EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel();
+            EmployeeBusinessLayer employeeBusinessLayer = new EmployeeBusinessLayer();
+            List<Employee> employees = employeeBusinessLayer.GetEmployees();
 
-            EmployeeViewModel vmEmp = new EmployeeViewModel();
-            vmEmp.EmployeeName = $"{emp.Firstname} {emp.Lastname}";
-            vmEmp.Salary = emp.Salary.ToString("C");
+            List<EmployeeViewModel> empViewModels = new List<EmployeeViewModel>();
 
-            if (emp.Salary > 15000)
+            foreach (var emp in employees)
             {
-                vmEmp.SalaryColor = "yellow";
-            }
-            else
-            {
-                vmEmp.SalaryColor = "green";
-            }
+                EmployeeViewModel  empViewModel = new EmployeeViewModel();
+                empViewModel.EmployeeName = emp.Firstname + ' ' + emp.Lastname;
+                empViewModel.Salary = emp.Salary.ToString("C");
 
-            vmEmp.Username = "Admin";
+                if (emp.Salary > 15000)
+                {
+                    empViewModel.SalaryColor = "yellow";
+                }
+                else
+                {
+                    empViewModel.SalaryColor = "green";
+                }
+                empViewModels.Add(empViewModel);
+            }
+            employeeListViewModel.Employees = empViewModels;
+            employeeListViewModel.Username = "Admin";
 
-            return View("MyView", vmEmp);
+
+            return View("MyView", employeeListViewModel);
         }
 
 

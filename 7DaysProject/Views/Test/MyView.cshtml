@@ -1,5 +1,5 @@
 ﻿@using _7DaysProject.ViewModels
-@model _7DaysProject.ViewModels.EmployeeViewModel
+@model _7DaysProject.ViewModels.EmployeeListViewModel
 
 @{
     Layout = null;
@@ -14,12 +14,22 @@
     <title>MyView</title>
 </head>
 <body>
-    <div>
-        <b> Employee Details</b><br />
-        Employee Name: @Model.EmployeeName <br />
-        <span style="background-color: @Model.SalaryColor">
-            Employee Salary: @Model.Salary
-        </span>
-    </div>
+    Hello @Model.Username
+<hr />  
+<div>
+    <table>
+        <tr>
+            <th>Employee name</th>
+            <th>Salary</th>
+        </tr>
+        @foreach (EmployeeViewModel item in Model.Employees)
+        {
+            <tr>
+                <td>@item.EmployeeName</td>
+                <td style="background-color: @item.SalaryColor">@item.Salary </td>
+            </tr>
+        }
+    </table>
+</div>
 </body>
 </html>
