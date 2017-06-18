@@ -10,5 +10,6 @@ namespace _7DaysProject
         {
             ConfigureAuth(app);
         }
+        // here is my change
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Razor.Parser.SyntaxTree;
 using _7DaysProject.Models;
 
 namespace _7DaysProject.Controllers
@@ -42,6 +43,7 @@ namespace _7DaysProject.Controllers
             emp.Salary = 20000;
 
             ViewData["Employee"] = emp;
+
 
             if (Some_Condition_is_Matching)
             {
