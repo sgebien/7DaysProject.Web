@@ -10,31 +10,59 @@ using _7DaysProject.ViewModels;
 namespace _7DaysProject.Controllers
 {
 
- public class Customer
+    public class Customer
+    {
+        public string CustomerName { get; set; }
+        public string Address { get; set; }
+
+        public override string ToString()
         {
-            public string CustomerName { get; set; }
-            public string Address { get; set; }
-
-            public override string ToString()
-            {
-                return this.CustomerName + "|" + this.Address;
-            }
-
-       
+            return this.CustomerName + "|" + this.Address;
         }
-    public class TestController : Controller
+
+
+    }
+    public class EmployeeController : Controller
     {
         public bool Some_Condition_is_Matching { get; set; }
         // GET: Test
         public Customer GetCustomer()
         {
-            Customer c= new Customer();
+            Customer c = new Customer();
             c.CustomerName = "Customer 1";
             c.Address = "Address1";
             return c;
         }
 
-        public ActionResult GetView()
+        public ActionResult SaveEmployee(Employee e, string BtnSubmit)
+        {
+            switch (BtnSubmit)
+            {
+                case "Save Employee":
+                    if (ModelState.IsValid)
+                    {
+                        EmployeeBusinessLayer empBal = new EmployeeBusinessLayer();
+                        empBal.SaveEmployee(e);
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View("CreateEmployee");
+                    }
+
+
+                case "Cancel":
+                    return RedirectToAction("Index");
+            }
+            return new EmptyResult();
+        }
+
+        public ActionResult AddNew()
+        {
+            return View("CreateEmployee");
+        }
+
+        public ActionResult Index()
         {
             EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel();
             EmployeeBusinessLayer employeeBusinessLayer = new EmployeeBusinessLayer();
@@ -44,7 +72,7 @@ namespace _7DaysProject.Controllers
 
             foreach (var emp in employees)
             {
-                EmployeeViewModel  empViewModel = new EmployeeViewModel();
+                EmployeeViewModel empViewModel = new EmployeeViewModel();
                 empViewModel.EmployeeName = emp.Firstname + ' ' + emp.Lastname;
                 empViewModel.Salary = emp.Salary.ToString("C");
 
@@ -59,10 +87,10 @@ namespace _7DaysProject.Controllers
                 empViewModels.Add(empViewModel);
             }
             employeeListViewModel.Employees = empViewModels;
-            employeeListViewModel.Username = "Admin";
 
 
-            return View("MyView", employeeListViewModel);
+
+            return View("Index", employeeListViewModel);
         }
 
 
@@ -70,9 +98,9 @@ namespace _7DaysProject.Controllers
         //I do want have a method which is public but not accasssable from the web
         [NonAction]
         public string SimpleMethod()
-            {
-                return "Hi, I am not action method";
-            }
+        {
+            return "Hi, I am not action method";
+        }
 
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using _7DaysProject.DataAccessLayer;
 
 namespace _7DaysProject.Models
 {
@@ -9,26 +10,17 @@ namespace _7DaysProject.Models
     {
         public List<Employee> GetEmployees()
         {
-            List<Employee> emyployees=new List<Employee>();
-            Employee emp = new Employee();
-            emp.Firstname = "Johnson";
-            emp.Lastname = "fernandes";
-            emp.Salary = 14000;
-            emyployees.Add(emp);
+           SalesERPDAL salesDal=new SalesERPDAL();
+            return salesDal.Employees.ToList();
+        }
 
-            emp = new Employee();
-            emp.Firstname = "Michael";
-            emp.Lastname = "Jackson";
-            emp.Salary = 16000;
-            emyployees.Add(emp);
+        public Employee SaveEmployee(Employee e)
+        {
+            SalesERPDAL salesDal=new SalesERPDAL();
+            salesDal.Employees.Add(e);
+            salesDal.SaveChanges();
 
-            emp = new Employee();
-            emp.Firstname = "Robert";
-            emp.Lastname = "Pattinson";
-            emp.Salary = 20000;
-            emyployees.Add(emp);
-
-            return emyployees;
+            return e;
         }
     }
 }
